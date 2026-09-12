@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RankSystem</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="cabecalho">
+        <div class="logo">
+            <span>🏆</span>
+            <div>
+                <h1>RankSystem</h1>
+                <p>Ranking automático</p>
+            </div>
+        </div>
+
+        <button id="modoEscuro" class="botao-tema" title="Mudar tema">
+            🌙
+        </button>
+    </header>
+
+
+    <main>
+
+        <!-- CADASTRO -->
+
+        <section class="area-cadastro">
+
+            <h2>Adicionar participante</h2>
+
+            <div class="formulario">
+
+                <div class="campo">
+                    <label for="nome">Nome</label>
+
+                    <input
+                        type="text"
+                        id="nome"
+                        placeholder="Digite o nome"
+                        maxlength="30"
+                    >
+                </div>
+
+
+                <div class="campo campo-pontos">
+                    <label for="pontos">Pontos</label>
+
+                    <input
+                        type="number"
+                        id="pontos"
+                        placeholder="0"
+                        min="0"
+                    >
+                </div>
+
+
+                <button id="adicionar" class="botao-adicionar">
+                    Adicionar
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ESTATÍSTICAS -->
+
+        <section class="estatisticas">
+
+            <div class="estatistica">
+                <span>Participantes</span>
+                <strong id="quantidade">0</strong>
+            </div>
+
+            <div class="estatistica">
+                <span>Maior pontuação</span>
+                <strong id="maiorPontuacao">0</strong>
+            </div>
+
+            <div class="estatistica">
+                <span>Média</span>
+                <strong id="media">0</strong>
+            </div>
+
+            <div class="estatistica">
+                <span>Menor pontuação</span>
+                <strong id="menorPontuacao">0</strong>
+            </div>
+
+        </section>
+
+
+        <!-- PODIO -->
+
+        <section class="secao-podio">
+
+            <div class="titulo-secao">
+                <h2>Pódio</h2>
+            </div>
+
+            <div id="podio">
+
+                <p class="vazio">
+                    Adicione participantes para formar o pódio.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONTROLES -->
+
+        <section class="controles">
+
+            <input
+                type="text"
+                id="pesquisa"
+                placeholder="🔎 Pesquisar participante..."
+            >
+
+
+            <select id="ordenacao">
+
+                <option value="maior">
+                    Maior pontuação
+                </option>
+
+                <option value="menor">
+                    Menor pontuação
+                </option>
+
+                <option value="az">
+                    Nome A → Z
+                </option>
+
+                <option value="za">
+                    Nome Z → A
+                </option>
+
+            </select>
+
+
+            <button id="exportar" class="botao-normal">
+                Exportar CSV
+            </button>
+
+
+            <button id="limparRanking" class="botao-apagar">
+                Limpar ranking
+            </button>
+
+        </section>
+
+
+        <!-- RANKING -->
+
+        <section class="ranking-secao">
+
+            <div class="titulo-ranking">
+
+                <div>
+                    <h2>Ranking</h2>
+                    <p>Classificação dos participantes</p>
+                </div>
+
+            </div>
+
+
+            <div class="cabecalho-ranking">
+
+                <span>Posição</span>
+                <span>Participante</span>
+                <span>Pontos</span>
+                <span>Ações</span>
+
+            </div>
+
+
+            <div id="ranking">
+
+                <p class="vazio">
+                    Nenhum participante cadastrado.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- GRAFICO -->
+
+        <section class="grafico-secao">
+
+            <h2>Pontuação dos participantes</h2>
+
+            <p class="texto-ajuda">
+                Comparação das pontuações.
+            </p>
+
+            <div id="grafico">
+
+                <p class="vazio">
+                    O gráfico aparecerá quando houver participantes.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- MENSAGEM -->
+
+    <div id="mensagem"></div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
