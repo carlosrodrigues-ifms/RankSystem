@@ -1,6 +1,4 @@
-/* ==========================================
-   CONFIGURAÇÕES GERAIS
-========================================== */
+/* Configurações básicas */
 
 * {
     margin: 0;
@@ -9,1070 +7,644 @@
 }
 
 
+/* Cores do sistema */
+
 :root {
-
     --fundo: #eeeeee;
-
     --branco: #ffffff;
-
     --texto: #222222;
-
     --cinza: #666666;
-
     --borda: #d5d5d5;
-
     --azul: #315b9b;
-
     --azul-hover: #254a82;
-
-    --verde: #3d8055;
-
     --vermelho: #b94a48;
-
     --amarelo: #d6a62b;
-
-    --sombra: 0 2px 5px rgba(0, 0, 0, 0.08);
-
 }
 
 
-/* ==========================================
-   MODO ESCURO
-========================================== */
-
-body.escuro {
-
-    --fundo: #202124;
-
-    --branco: #292a2d;
-
-    --texto: #eeeeee;
-
-    --cinza: #aaaaaa;
-
-    --borda: #444444;
-
-    --azul: #527bbd;
-
-    --azul-hover: #4169a5;
-
-    --verde: #57966c;
-
-    --vermelho: #c96563;
-
-    --amarelo: #dcb448;
-
-    --sombra: 0 2px 6px rgba(0, 0, 0, 0.3);
-
-}
-
-
-/* ==========================================
-   BODY
-========================================== */
+/* Página */
 
 body {
-
     font-family: Arial, Helvetica, sans-serif;
-
     background: var(--fundo);
-
     color: var(--texto);
-
     min-height: 100vh;
-
-    transition: background 0.2s, color 0.2s;
-
 }
 
 
-/* ==========================================
-   CABEÇALHO
-========================================== */
+/* Modo escuro */
+
+body.escuro {
+    --fundo: #202124;
+    --branco: #292a2d;
+    --texto: #eeeeee;
+    --cinza: #aaaaaa;
+    --borda: #444444;
+    --azul: #527bbd;
+    --azul-hover: #4169a5;
+    --vermelho: #c96563;
+    --amarelo: #dcb448;
+}
+
+
+/* Cabeçalho */
 
 .cabecalho {
-
     width: 100%;
-
     background: var(--branco);
-
     border-bottom: 1px solid var(--borda);
-
     padding: 18px 7%;
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
 }
 
 
 .logo {
-
     display: flex;
-
     align-items: center;
-
     gap: 12px;
-
 }
 
 
 .logo > span {
-
     font-size: 32px;
-
 }
 
 
 .logo h1 {
-
     font-size: 25px;
-
     font-weight: 600;
-
 }
 
 
 .logo p {
-
     color: var(--cinza);
-
     font-size: 14px;
-
     margin-top: 3px;
-
 }
 
 
+/* Botão do modo escuro */
+
 .botao-tema {
-
     width: 40px;
-
     height: 40px;
-
     border: 1px solid var(--borda);
-
     border-radius: 6px;
-
     background: var(--branco);
-
     font-size: 18px;
-
     cursor: pointer;
-
 }
 
 
 .botao-tema:hover {
-
     background: var(--fundo);
-
 }
 
 
-/* ==========================================
-   CONTEÚDO
-========================================== */
+/* Conteúdo principal */
 
 main {
-
     width: 900px;
-
     max-width: 92%;
-
     margin: 30px auto;
-
 }
 
 
-/* ==========================================
-   ÁREA DE CADASTRO
-========================================== */
+/* Área de cadastro */
 
 .area-cadastro {
-
     background: var(--branco);
-
     border: 1px solid var(--borda);
-
     padding: 22px;
-
     margin-bottom: 20px;
-
 }
 
 
 .area-cadastro h2 {
-
     font-size: 19px;
-
     font-weight: 600;
-
     margin-bottom: 18px;
-
 }
 
 
 .formulario {
-
     display: flex;
-
     align-items: end;
-
     gap: 12px;
-
 }
 
 
 .campo {
-
     flex: 1;
-
 }
 
 
 .campo-pontos {
-
     flex: 0 0 150px;
-
 }
 
 
 .campo label {
-
     display: block;
-
     font-size: 13px;
-
     color: var(--cinza);
-
     margin-bottom: 6px;
-
 }
 
 
+/* Inputs e select */
+
 input,
 select {
-
     width: 100%;
-
     height: 40px;
-
     border: 1px solid var(--borda);
-
     border-radius: 5px;
-
     background: var(--branco);
-
     color: var(--texto);
-
     padding: 0 11px;
-
     font-size: 14px;
-
     outline: none;
-
 }
 
 
 input:focus,
 select:focus {
-
     border-color: var(--azul);
-
 }
 
-
-/* ==========================================
-   BOTÕES
-========================================== */
 
 button {
-
     font-family: inherit;
-
     cursor: pointer;
-
 }
 
 
+/* Botão adicionar */
+
 .botao-adicionar {
-
     height: 40px;
-
     padding: 0 20px;
-
     border: none;
-
     border-radius: 5px;
-
     background: var(--azul);
-
     color: white;
-
     font-size: 14px;
-
 }
 
 
 .botao-adicionar:hover {
-
     background: var(--azul-hover);
-
 }
 
 
-.botao-normal {
-
-    height: 40px;
-
-    padding: 0 15px;
-
-    border: 1px solid var(--borda);
-
-    border-radius: 5px;
-
-    background: var(--branco);
-
-    color: var(--texto);
-
-}
-
-
-.botao-normal:hover {
-
-    background: var(--fundo);
-
-}
-
+/* Botão limpar */
 
 .botao-apagar {
-
     height: 40px;
-
     padding: 0 15px;
-
     border: 1px solid var(--vermelho);
-
     border-radius: 5px;
-
     background: transparent;
-
     color: var(--vermelho);
-
 }
 
 
 .botao-apagar:hover {
-
     background: var(--vermelho);
-
     color: white;
-
 }
 
 
-/* ==========================================
-   ESTATÍSTICAS
-========================================== */
+/* Estatísticas */
 
 .estatisticas {
-
     display: grid;
-
     grid-template-columns: repeat(4, 1fr);
-
     gap: 10px;
-
     margin-bottom: 20px;
-
 }
 
 
 .estatistica {
-
     background: var(--branco);
-
     border: 1px solid var(--borda);
-
     padding: 15px 18px;
-
 }
 
 
 .estatistica span {
-
     display: block;
-
     color: var(--cinza);
-
     font-size: 13px;
-
     margin-bottom: 7px;
-
 }
 
 
 .estatistica strong {
-
     font-size: 23px;
-
     font-weight: 600;
-
 }
 
 
-/* ==========================================
-   PODIO
-========================================== */
+/* Pódio */
 
 .secao-podio {
-
     background: var(--branco);
-
     border: 1px solid var(--borda);
-
     padding: 22px;
-
     margin-bottom: 20px;
-
 }
 
 
-.titulo-secao h2 {
-
+.secao-podio h2 {
     font-size: 19px;
-
     font-weight: 600;
-
     margin-bottom: 20px;
-
 }
 
 
 #podio {
-
     min-height: 180px;
-
     display: flex;
-
     justify-content: center;
-
     align-items: end;
-
     gap: 12px;
-
 }
 
 
 .podio-item {
-
     width: 190px;
-
     text-align: center;
-
     background: var(--fundo);
-
     padding: 15px;
-
     border: 1px solid var(--borda);
-
 }
 
 
 .podio-item .medalha {
-
     display: block;
-
     font-size: 34px;
-
     margin-bottom: 8px;
-
 }
 
 
 .podio-item .nome-podio {
-
     display: block;
-
     font-weight: bold;
-
     margin-bottom: 5px;
-
 }
 
 
 .pontos-podio {
-
     font-size: 14px;
-
     color: var(--cinza);
-
 }
 
 
 .podio-primeiro {
-
     border-top: 4px solid #d6a62b;
-
     min-height: 175px;
-
 }
 
 
 .podio-segundo {
-
     border-top: 4px solid #999999;
-
     min-height: 145px;
-
 }
 
 
 .podio-terceiro {
-
     border-top: 4px solid #a66a3f;
-
     min-height: 125px;
-
 }
 
 
-/* ==========================================
-   CONTROLES
-========================================== */
+/* Controles */
 
 .controles {
-
     display: flex;
-
     gap: 10px;
-
     margin-bottom: 15px;
-
 }
 
 
 #pesquisa {
-
     flex: 1;
-
 }
 
 
 #ordenacao {
-
     width: 190px;
-
 }
 
 
-/* ==========================================
-   RANKING
-========================================== */
+/* Área do ranking */
 
 .ranking-secao {
-
     background: var(--branco);
-
     border: 1px solid var(--borda);
-
     padding: 22px;
-
     margin-bottom: 20px;
-
 }
 
 
 .titulo-ranking {
-
     margin-bottom: 20px;
-
 }
 
 
 .titulo-ranking h2 {
-
     font-size: 19px;
-
     font-weight: 600;
-
 }
 
 
 .titulo-ranking p {
-
     color: var(--cinza);
-
     font-size: 13px;
-
     margin-top: 4px;
-
 }
 
 
-/* ==========================================
-   CABEÇALHO DA TABELA
-========================================== */
+/* Cabeçalho do ranking */
 
 .cabecalho-ranking {
-
     display: grid;
-
     grid-template-columns: 90px 1fr 110px 130px;
-
     gap: 10px;
-
     padding: 8px 12px;
-
     color: var(--cinza);
-
     font-size: 12px;
-
     border-bottom: 1px solid var(--borda);
-
 }
 
 
-/* ==========================================
-   PARTICIPANTE
-========================================== */
+/* Participantes */
 
 .participante {
-
     display: grid;
-
     grid-template-columns: 90px 1fr 110px 130px;
-
     align-items: center;
-
     gap: 10px;
-
     min-height: 58px;
-
     padding: 8px 12px;
-
     border-bottom: 1px solid var(--borda);
-
 }
 
 
 .participante:last-child {
-
     border-bottom: none;
-
 }
 
 
 .participante:hover {
-
     background: var(--fundo);
-
 }
 
 
 .posicao {
-
     font-weight: bold;
-
 }
 
 
 .nome-participante {
-
     font-size: 15px;
-
 }
 
 
 .pontos {
-
     font-weight: bold;
-
 }
 
 
-/* ==========================================
-   BOTÕES DAS AÇÕES
-========================================== */
+/* Botões de ação */
 
 .acoes {
-
     display: flex;
-
     gap: 5px;
-
 }
 
 
 .editar,
 .excluir {
-
     width: 32px;
-
     height: 30px;
-
     border: 1px solid var(--borda);
-
     border-radius: 4px;
-
     background: var(--branco);
-
     font-size: 14px;
-
 }
 
 
 .editar:hover {
-
     background: var(--amarelo);
-
     color: white;
-
     border-color: var(--amarelo);
-
 }
 
 
 .excluir:hover {
-
     background: var(--vermelho);
-
     color: white;
-
     border-color: var(--vermelho);
-
 }
 
 
-/* ==========================================
-   DESTAQUES DO PÓDIO
-========================================== */
+/* Destaque dos três primeiros */
 
 .primeiro {
-
     border-left: 4px solid #d6a62b;
-
 }
 
 
 .segundo {
-
     border-left: 4px solid #999999;
-
 }
 
 
 .terceiro {
-
     border-left: 4px solid #a66a3f;
-
 }
 
 
-/* ==========================================
-   GRÁFICO
-========================================== */
+/* Gráfico */
 
 .grafico-secao {
-
     background: var(--branco);
-
     border: 1px solid var(--borda);
-
     padding: 22px;
-
 }
 
 
 .grafico-secao h2 {
-
     font-size: 19px;
-
     font-weight: 600;
-
 }
 
 
 .texto-ajuda {
-
     color: var(--cinza);
-
     font-size: 13px;
-
     margin-top: 4px;
-
     margin-bottom: 20px;
-
 }
 
 
 #grafico {
-
     display: flex;
-
     flex-direction: column;
-
     gap: 10px;
-
 }
 
 
 .barra-container {
-
     display: flex;
-
     align-items: center;
-
     gap: 10px;
-
 }
 
 
 .barra-nome {
-
     width: 110px;
-
     white-space: nowrap;
-
     overflow: hidden;
-
     text-overflow: ellipsis;
-
     font-size: 13px;
-
 }
 
 
 .barra-fundo {
-
     flex: 1;
-
     height: 20px;
-
     background: var(--fundo);
-
     border: 1px solid var(--borda);
-
 }
 
 
 .barra {
-
     height: 100%;
-
     background: var(--azul);
-
-    transition: width 0.4s;
-
 }
 
 
 .barra-pontos {
-
     width: 50px;
-
     text-align: right;
-
     font-size: 13px;
-
     font-weight: bold;
-
 }
 
 
-/* ==========================================
-   MENSAGEM
-========================================== */
+/* Mensagem */
 
 #mensagem {
-
     position: fixed;
-
     bottom: 20px;
-
     right: 20px;
-
     background: #222;
-
     color: white;
-
     padding: 12px 17px;
-
     border-radius: 5px;
-
     font-size: 14px;
-
     opacity: 0;
-
-    transform: translateY(10px);
-
-    pointer-events: none;
-
     transition: 0.2s;
-
 }
 
 
 #mensagem.mostrar {
-
     opacity: 1;
-
-    transform: translateY(0);
-
 }
 
 
-/* ==========================================
-   MENSAGEM VAZIA
-========================================== */
+/* Texto quando não há dados */
 
 .vazio {
-
     text-align: center;
-
     color: var(--cinza);
-
     padding: 30px 10px;
-
     font-size: 14px;
-
 }
 
 
-/* ==========================================
-   CELULAR
-========================================== */
+/* Tela menor */
 
 @media (max-width: 750px) {
 
     .cabecalho {
-
         padding: 16px 4%;
-
     }
-
 
     main {
-
         max-width: 94%;
-
     }
-
 
     .formulario {
-
         flex-direction: column;
-
         align-items: stretch;
-
     }
-
 
     .campo-pontos {
-
         flex: auto;
-
     }
-
 
     .estatisticas {
-
         grid-template-columns: repeat(2, 1fr);
-
     }
-
 
     .controles {
-
         flex-wrap: wrap;
-
     }
-
 
     #ordenacao {
-
         width: 100%;
-
     }
-
 
     #podio {
-
         flex-direction: column;
-
         align-items: stretch;
-
     }
-
 
     .podio-item {
-
         width: 100%;
-
         min-height: auto;
-
     }
-
 
     .cabecalho-ranking {
-
         display: none;
-
     }
-
 
     .participante {
-
         grid-template-columns: 55px 1fr auto;
-
         gap: 8px;
-
     }
-
 
     .pontos {
-
         grid-column: 2;
-
     }
-
 
     .acoes {
-
         grid-column: 3;
-
         grid-row: 1 / 3;
-
     }
-
 }
 
+
+/* Celular */
 
 @media (max-width: 450px) {
 
     .estatisticas {
-
         grid-template-columns: 1fr;
-
     }
-
 
     .controles {
-
         flex-direction: column;
-
     }
 
-
-    .botao-normal,
     .botao-apagar {
-
         width: 100%;
-
     }
-
 }

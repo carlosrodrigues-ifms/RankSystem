@@ -12,25 +12,26 @@
 
 <body>
 
+    <!-- Cabeçalho -->
     <header class="cabecalho">
+
         <div class="logo">
             <span>🏆</span>
+
             <div>
                 <h1>RankSystem</h1>
                 <p>Ranking automático</p>
             </div>
         </div>
 
-        <button id="modoEscuro" class="botao-tema" title="Mudar tema">
-            🌙
-        </button>
+        <button id="modoEscuro" class="botao-tema">🌙</button>
+
     </header>
 
 
     <main>
 
-        <!-- CADASTRO -->
-
+        <!-- Cadastro de participante -->
         <section class="area-cadastro">
 
             <h2>Adicionar participante</h2>
@@ -38,18 +39,20 @@
             <div class="formulario">
 
                 <div class="campo">
+
                     <label for="nome">Nome</label>
 
                     <input
                         type="text"
                         id="nome"
                         placeholder="Digite o nome"
-                        maxlength="30"
                     >
+
                 </div>
 
 
                 <div class="campo campo-pontos">
+
                     <label for="pontos">Pontos</label>
 
                     <input
@@ -58,6 +61,7 @@
                         placeholder="0"
                         min="0"
                     >
+
                 </div>
 
 
@@ -70,8 +74,7 @@
         </section>
 
 
-        <!-- ESTATÍSTICAS -->
-
+        <!-- Estatísticas -->
         <section class="estatisticas">
 
             <div class="estatistica">
@@ -97,13 +100,10 @@
         </section>
 
 
-        <!-- PODIO -->
-
+        <!-- Pódio -->
         <section class="secao-podio">
 
-            <div class="titulo-secao">
-                <h2>Pódio</h2>
-            </div>
+            <h2>Pódio</h2>
 
             <div id="podio">
 
@@ -116,8 +116,7 @@
         </section>
 
 
-        <!-- CONTROLES -->
-
+        <!-- Pesquisa e ordenação -->
         <section class="controles">
 
             <input
@@ -148,11 +147,6 @@
             </select>
 
 
-            <button id="exportar" class="botao-normal">
-                Exportar CSV
-            </button>
-
-
             <button id="limparRanking" class="botao-apagar">
                 Limpar ranking
             </button>
@@ -160,16 +154,14 @@
         </section>
 
 
-        <!-- RANKING -->
-
+        <!-- Ranking -->
         <section class="ranking-secao">
 
             <div class="titulo-ranking">
 
-                <div>
-                    <h2>Ranking</h2>
-                    <p>Classificação dos participantes</p>
-                </div>
+                <h2>Ranking</h2>
+
+                <p>Classificação dos participantes</p>
 
             </div>
 
@@ -195,8 +187,7 @@
         </section>
 
 
-        <!-- GRAFICO -->
-
+        <!-- Gráfico -->
         <section class="grafico-secao">
 
             <h2>Pontuação dos participantes</h2>
@@ -218,8 +209,7 @@
     </main>
 
 
-    <!-- MENSAGEM -->
-
+    <!-- Mensagens do sistema -->
     <div id="mensagem"></div>
 
 

@@ -1,1158 +1,566 @@
-// ==========================================
-// RANKSYSTEM
-// ==========================================
-
-
-// ==========================================
-// VARIÁVEIS
-// ==========================================
-
+// Lista dos participantes
 let participantes = [];
 
-let ordemAtual = "maior";
+let nome = document.getElementById("nome");
+let pontos = document.getElementById("pontos");
+let adicionar = document.getElementById("adicionar");
 
+let ranking = document.getElementById("ranking");
+let podio = document.getElementById("podio");
+let grafico = document.getElementById("grafico");
 
-// ==========================================
-// CARREGAR DADOS SALVOS
-// ==========================================
+let pesquisa = document.getElementById("pesquisa");
+let ordenacao = document.getElementById("ordenacao");
 
-const dadosSalvos =
-    localStorage.getItem("rankSystem");
+let quantidade = document.getElementById("quantidade");
+let maiorPontuacao = document.getElementById("maiorPontuacao");
+let menorPontuacao = document.getElementById("menorPontuacao");
+let media = document.getElementById("media");
 
+let mensagem = document.getElementById("mensagem");
 
-if (dadosSalvos) {
 
-    try {
+// Adicionar participante
 
-        participantes =
-            JSON.parse(dadosSalvos);
+adicionar.onclick = function() {
 
-    } catch (erro) {
+    let nomeDigitado = nome.value;
+    let pontosDigitados = Number(pontos.value);
 
-        participantes = [];
+    // Verifica se o nome foi digitado
+    if (nomeDigitado == "") {
 
-    }
-
-}
-
-
-// ==========================================
-// ELEMENTOS DO HTML
-// ==========================================
-
-const nomeInput =
-    document.getElementById("nome");
-
-const pontosInput =
-    document.getElementById("pontos");
-
-const botaoAdicionar =
-    document.getElementById("adicionar");
-
-const pesquisaInput =
-    document.getElementById("pesquisa");
-
-const ordenacao =
-    document.getElementById("ordenacao");
-
-const botaoExportar =
-    document.getElementById("exportar");
-
-const botaoLimpar =
-    document.getElementById("limparRanking");
-
-const botaoTema =
-    document.getElementById("modoEscuro");
-
-const ranking =
-    document.getElementById("ranking");
-
-const podio =
-    document.getElementById("podio");
-
-const grafico =
-    document.getElementById("grafico");
-
-const quantidade =
-    document.getElementById("quantidade");
-
-const maiorPontuacao =
-    document.getElementById("maiorPontuacao");
-
-const menorPontuacao =
-    document.getElementById("menorPontuacao");
-
-const media =
-    document.getElementById("media");
-
-const mensagem =
-    document.getElementById("mensagem");
-
-
-// ==========================================
-// SALVAR
-// ==========================================
-
-function salvarRanking() {
-
-    localStorage.setItem(
-        "rankSystem",
-        JSON.stringify(participantes)
-    );
-
-}
-
-
-// ==========================================
-// MENSAGEM
-// ==========================================
-
-function mostrarMensagem(texto) {
-
-    mensagem.textContent = texto;
-
-    mensagem.classList.add("mostrar");
-
-
-    setTimeout(function () {
-
-        mensagem.classList.remove("mostrar");
-
-    }, 2500);
-
-}
-
-
-// ==========================================
-// ORGANIZAR
-// ==========================================
-
-function organizarRanking() {
-
-    if (ordemAtual === "maior") {
-
-        participantes.sort(
-            (a, b) => b.pontos - a.pontos
-        );
-
-    }
-
-
-    if (ordemAtual === "menor") {
-
-        participantes.sort(
-            (a, b) => a.pontos - b.pontos
-        );
-
-    }
-
-
-    if (ordemAtual === "az") {
-
-        participantes.sort(
-            (a, b) =>
-                a.nome.localeCompare(b.nome)
-        );
-
-    }
-
-
-    if (ordemAtual === "za") {
-
-        participantes.sort(
-            (a, b) =>
-                b.nome.localeCompare(a.nome)
-        );
-
-    }
-
-}
-
-
-// ==========================================
-// ESTATÍSTICAS
-// ==========================================
-
-function atualizarEstatisticas() {
-
-    quantidade.textContent =
-        participantes.length;
-
-
-    if (participantes.length === 0) {
-
-        maiorPontuacao.textContent = 0;
-
-        menorPontuacao.textContent = 0;
-
-        media.textContent = 0;
+        mostrarMensagem("Digite um nome.");
 
         return;
-
     }
 
+    // Verifica a pontuação
+    if (pontos.value == "" || pontosDigitados < 0) {
 
-    const pontuacoes =
-        participantes.map(
-            participante => participante.pontos
-        );
-
-
-    const maior =
-        Math.max(...pontuacoes);
-
-
-    const menor =
-        Math.min(...pontuacoes);
-
-
-    const total =
-        pontuacoes.reduce(
-            (soma, valor) => soma + valor,
-            0
-        );
-
-
-    const mediaCalculada =
-        total / participantes.length;
-
-
-    maiorPontuacao.textContent =
-        maior;
-
-
-    menorPontuacao.textContent =
-        menor;
-
-
-    media.textContent =
-        mediaCalculada.toFixed(2);
-
-}
-
-
-// ==========================================
-// ADICIONAR PARTICIPANTE
-// ==========================================
-
-botaoAdicionar.addEventListener(
-    "click",
-    adicionarParticipante
-);
-
-
-function adicionarParticipante() {
-
-    const nome =
-        nomeInput.value.trim();
-
-
-    const pontosTexto =
-        pontosInput.value;
-
-
-    const pontos =
-        Number(pontosTexto);
-
-
-    // Verificar nome
-
-    if (nome === "") {
-
-        mostrarMensagem(
-            "⚠️ Digite o nome do participante."
-        );
-
-        nomeInput.focus();
+        mostrarMensagem("Digite uma pontuação válida.");
 
         return;
-
     }
 
+    // Verifica se o participante já existe
+    for (let i = 0; i < participantes.length; i++) {
 
-    // Verificar pontuação
+        if (participantes[i].nome.toLowerCase() == nomeDigitado.toLowerCase()) {
 
-    if (
-        pontosTexto === "" ||
-        isNaN(pontos) ||
-        pontos < 0
-    ) {
-
-        mostrarMensagem(
-            "⚠️ Digite uma pontuação válida."
-        );
-
-        pontosInput.focus();
-
-        return;
-
-    }
-
-
-    // Verificar nome repetido
-
-    const nomeExiste =
-        participantes.some(
-            participante =>
-                participante.nome.toLowerCase() ===
-                nome.toLowerCase()
-        );
-
-
-    if (nomeExiste) {
-
-        mostrarMensagem(
-            "⚠️ Esse nome já está no ranking."
-        );
-
-        return;
-
-    }
-
-
-    // Adicionar
-
-    participantes.push({
-
-        nome: nome,
-
-        pontos: pontos
-
-    });
-
-
-    // Organizar
-
-    organizarRanking();
-
-
-    // Salvar
-
-    salvarRanking();
-
-
-    // Atualizar
-
-    atualizarTudo();
-
-
-    // Limpar campos
-
-    nomeInput.value = "";
-
-    pontosInput.value = "";
-
-    nomeInput.focus();
-
-
-    mostrarMensagem(
-        "✓ Participante adicionado."
-    );
-
-}
-
-
-// ==========================================
-// PESQUISA
-// ==========================================
-
-pesquisaInput.addEventListener(
-    "input",
-    mostrarRanking
-);
-
-
-// ==========================================
-// ORDENAR
-// ==========================================
-
-ordenacao.addEventListener(
-    "change",
-    function () {
-
-        ordemAtual =
-            ordenacao.value;
-
-        organizarRanking();
-
-        salvarRanking();
-
-        atualizarTudo();
-
-    }
-);
-
-
-// ==========================================
-// MOSTRAR RANKING
-// ==========================================
-
-function mostrarRanking() {
-
-    ranking.innerHTML = "";
-
-
-    const pesquisa =
-        pesquisaInput.value
-            .toLowerCase()
-            .trim();
-
-
-    const filtrados =
-        participantes.filter(
-            participante =>
-                participante.nome
-                    .toLowerCase()
-                    .includes(pesquisa)
-        );
-
-
-    if (filtrados.length === 0) {
-
-        ranking.innerHTML = `
-
-            <p class="vazio">
-
-                ${
-                    participantes.length === 0
-                    ? "Nenhum participante cadastrado."
-                    : "Nenhum participante encontrado."
-                }
-
-            </p>
-
-        `;
-
-        return;
-
-    }
-
-
-    filtrados.forEach(
-        function (participante) {
-
-            const indice =
-                participantes.indexOf(
-                    participante
-                );
-
-
-            const div =
-                document.createElement("div");
-
-
-            div.classList.add(
-                "participante"
-            );
-
-
-            // Destaque
-
-            if (indice === 0) {
-
-                div.classList.add("primeiro");
-
-            }
-
-            else if (indice === 1) {
-
-                div.classList.add("segundo");
-
-            }
-
-            else if (indice === 2) {
-
-                div.classList.add("terceiro");
-
-            }
-
-
-            // Medalha
-
-            let medalha = "";
-
-
-            if (indice === 0) {
-
-                medalha = "🥇";
-
-            }
-
-            else if (indice === 1) {
-
-                medalha = "🥈";
-
-            }
-
-            else if (indice === 2) {
-
-                medalha = "🥉";
-
-            }
-
-
-            div.innerHTML = `
-
-                <span class="posicao">
-
-                    ${medalha}
-                    ${indice + 1}º
-
-                </span>
-
-
-                <span class="nome-participante">
-
-                    ${escaparHTML(
-                        participante.nome
-                    )}
-
-                </span>
-
-
-                <span class="pontos">
-
-                    ${participante.pontos} pts
-
-                </span>
-
-
-                <div class="acoes">
-
-                    <button
-                        class="editar"
-                        onclick="editarParticipante(${indice})"
-                        title="Editar">
-
-                        ✏️
-
-                    </button>
-
-
-                    <button
-                        class="excluir"
-                        onclick="excluirParticipante(${indice})"
-                        title="Excluir">
-
-                        🗑️
-
-                    </button>
-
-                </div>
-
-            `;
-
-
-            ranking.appendChild(div);
-
-        }
-    );
-
-}
-
-
-// ==========================================
-// PROTEGER TEXTO
-// ==========================================
-
-function escaparHTML(texto) {
-
-    const div =
-        document.createElement("div");
-
-    div.textContent = texto;
-
-    return div.innerHTML;
-
-}
-
-
-// ==========================================
-// PODIO
-// ==========================================
-
-function mostrarPodio() {
-
-    podio.innerHTML = "";
-
-
-    if (participantes.length === 0) {
-
-        podio.innerHTML = `
-
-            <p class="vazio">
-
-                Adicione participantes para formar o pódio.
-
-            </p>
-
-        `;
-
-        return;
-
-    }
-
-
-    const itens = [];
-
-
-    // Segundo
-
-    if (participantes[1]) {
-
-        itens.push({
-
-            participante: participantes[1],
-
-            posicao: 2,
-
-            medalha: "🥈",
-
-            classe: "podio-segundo"
-
-        });
-
-    }
-
-
-    // Primeiro
-
-    if (participantes[0]) {
-
-        itens.push({
-
-            participante: participantes[0],
-
-            posicao: 1,
-
-            medalha: "🥇",
-
-            classe: "podio-primeiro"
-
-        });
-
-    }
-
-
-    // Terceiro
-
-    if (participantes[2]) {
-
-        itens.push({
-
-            participante: participantes[2],
-
-            posicao: 3,
-
-            medalha: "🥉",
-
-            classe: "podio-terceiro"
-
-        });
-
-    }
-
-
-    itens.forEach(
-        function (item) {
-
-            const div =
-                document.createElement("div");
-
-
-            div.className =
-                `podio-item ${item.classe}`;
-
-
-            div.innerHTML = `
-
-                <span class="medalha">
-
-                    ${item.medalha}
-
-                </span>
-
-
-                <span class="nome-podio">
-
-                    ${escaparHTML(
-                        item.participante.nome
-                    )}
-
-                </span>
-
-
-                <span>
-
-                    ${item.posicao}º lugar
-
-                </span>
-
-
-                <span class="pontos-podio">
-
-                    ${item.participante.pontos} pontos
-
-                </span>
-
-            `;
-
-
-            podio.appendChild(div);
-
-        }
-    );
-
-}
-
-
-// ==========================================
-// GRÁFICO
-// ==========================================
-
-function mostrarGrafico() {
-
-    grafico.innerHTML = "";
-
-
-    if (participantes.length === 0) {
-
-        grafico.innerHTML = `
-
-            <p class="vazio">
-
-                O gráfico aparecerá quando houver participantes.
-
-            </p>
-
-        `;
-
-        return;
-
-    }
-
-
-    const maior =
-        Math.max(
-            ...participantes.map(
-                participante =>
-                    participante.pontos
-            )
-        );
-
-
-    participantes
-        .slice(0, 10)
-        .forEach(
-            function (participante) {
-
-                let porcentagem = 0;
-
-
-                if (maior > 0) {
-
-                    porcentagem =
-                        (participante.pontos / maior) * 100;
-
-                }
-
-
-                const container =
-                    document.createElement("div");
-
-
-                container.className =
-                    "barra-container";
-
-
-                container.innerHTML = `
-
-                    <span class="barra-nome">
-
-                        ${escaparHTML(
-                            participante.nome
-                        )}
-
-                    </span>
-
-
-                    <div class="barra-fundo">
-
-                        <div
-                            class="barra"
-                            style="width: ${porcentagem}%">
-                        </div>
-
-                    </div>
-
-
-                    <span class="barra-pontos">
-
-                        ${participante.pontos}
-
-                    </span>
-
-                `;
-
-
-                grafico.appendChild(container);
-
-            }
-        );
-
-}
-
-
-// ==========================================
-// EDITAR
-// ==========================================
-
-function editarParticipante(indice) {
-
-    const participante =
-        participantes[indice];
-
-
-    const novaPontuacao =
-        prompt(
-            `Nova pontuação para ${participante.nome}:`,
-            participante.pontos
-        );
-
-
-    if (novaPontuacao === null) {
-
-        return;
-
-    }
-
-
-    const pontos =
-        Number(novaPontuacao);
-
-
-    if (
-        novaPontuacao.trim() === "" ||
-        isNaN(pontos) ||
-        pontos < 0
-    ) {
-
-        mostrarMensagem(
-            "⚠️ Pontuação inválida."
-        );
-
-        return;
-
-    }
-
-
-    participante.pontos =
-        pontos;
-
-
-    organizarRanking();
-
-    salvarRanking();
-
-    atualizarTudo();
-
-
-    mostrarMensagem(
-        "✓ Pontuação atualizada."
-    );
-
-}
-
-
-// ==========================================
-// EXCLUIR
-// ==========================================
-
-function excluirParticipante(indice) {
-
-    const participante =
-        participantes[indice];
-
-
-    const confirmar =
-        confirm(
-            `Deseja excluir ${participante.nome}?`
-        );
-
-
-    if (!confirmar) {
-
-        return;
-
-    }
-
-
-    participantes.splice(
-        indice,
-        1
-    );
-
-
-    salvarRanking();
-
-    atualizarTudo();
-
-
-    mostrarMensagem(
-        "✓ Participante excluído."
-    );
-
-}
-
-
-// ==========================================
-// LIMPAR RANKING
-// ==========================================
-
-botaoLimpar.addEventListener(
-    "click",
-    function () {
-
-        if (participantes.length === 0) {
-
-            mostrarMensagem(
-                "O ranking já está vazio."
-            );
+            mostrarMensagem("Esse participante já existe.");
 
             return;
-
         }
-
-
-        const confirmar =
-            confirm(
-                "Tem certeza que deseja apagar todos os participantes?"
-            );
-
-
-        if (!confirmar) {
-
-            return;
-
-        }
-
-
-        participantes = [];
-
-
-        localStorage.removeItem(
-            "rankSystem"
-        );
-
-
-        pesquisaInput.value = "";
-
-
-        atualizarTudo();
-
-
-        mostrarMensagem(
-            "✓ Ranking apagado."
-        );
-
-    }
-);
-
-
-// ==========================================
-// EXPORTAR CSV
-// ==========================================
-
-botaoExportar.addEventListener(
-    "click",
-    exportarCSV
-);
-
-
-function exportarCSV() {
-
-    if (participantes.length === 0) {
-
-        mostrarMensagem(
-            "⚠️ Não há participantes para exportar."
-        );
-
-        return;
-
     }
 
+    let participante = {
+        nome: nomeDigitado,
+        pontos: pontosDigitados
+    };
 
-    let csv =
-        "Posição,Nome,Pontuação\n";
+    // Adiciona na lista
+    participantes.push(participante);
 
+    nome.value = "";
+    pontos.value = "";
 
-    participantes.forEach(
-        function (participante, indice) {
+    organizar();
+    atualizar();
 
-            csv +=
-                `${indice + 1},"${participante.nome.replace(/"/g, '""')}",${participante.pontos}\n`;
-
-        }
-    );
-
-
-    const blob =
-        new Blob(
-            ["\ufeff" + csv],
-            {
-                type: "text/csv;charset=utf-8;"
-            }
-        );
+    mostrarMensagem("Participante adicionado.");
+};
 
 
-    const url =
-        URL.createObjectURL(blob);
+// Organizar ranking
 
+function organizar() {
 
-    const link =
-        document.createElement("a");
+    let tipo = ordenacao.value;
 
+    // Maior pontuação primeiro
+    if (tipo == "maior") {
 
-    link.href = url;
+        participantes.sort(function(a, b) {
 
-    link.download =
-        "ranking-ranksystem.csv";
+            return b.pontos - a.pontos;
 
+        });
+    }
 
-    link.click();
+    // Menor pontuação primeiro
+    if (tipo == "menor") {
 
+        participantes.sort(function(a, b) {
 
-    URL.revokeObjectURL(url);
+            return a.pontos - b.pontos;
 
+        });
+    }
 
-    mostrarMensagem(
-        "✓ Ranking exportado."
-    );
+    // Ordem alfabética
+    if (tipo == "az") {
 
+        participantes.sort(function(a, b) {
+
+            return a.nome.localeCompare(b.nome);
+
+        });
+    }
+
+    // Ordem alfabética inversa
+    if (tipo == "za") {
+
+        participantes.sort(function(a, b) {
+
+            return b.nome.localeCompare(a.nome);
+
+        });
+    }
 }
 
 
-// ==========================================
-// MODO ESCURO
-// ==========================================
+// Atualiza o sistema
 
-const temaSalvo =
-    localStorage.getItem(
-        "temaRankSystem"
-    );
+function atualizar() {
 
-
-if (temaSalvo === "escuro") {
-
-    document.body.classList.add(
-        "escuro"
-    );
-
-    botaoTema.textContent = "☀️";
-
-}
-
-
-botaoTema.addEventListener(
-    "click",
-    function () {
-
-        document.body.classList.toggle(
-            "escuro"
-        );
-
-
-        const escuro =
-            document.body.classList.contains(
-                "escuro"
-            );
-
-
-        if (escuro) {
-
-            botaoTema.textContent =
-                "☀️";
-
-            localStorage.setItem(
-                "temaRankSystem",
-                "escuro"
-            );
-
-        }
-
-        else {
-
-            botaoTema.textContent =
-                "🌙";
-
-            localStorage.setItem(
-                "temaRankSystem",
-                "claro"
-            );
-
-        }
-
-    }
-);
-
-
-// ==========================================
-// ATUALIZAR TUDO
-// ==========================================
-
-function atualizarTudo() {
-
-    atualizarEstatisticas();
+    organizar();
 
     mostrarRanking();
 
     mostrarPodio();
 
-    mostrarGrafico();
+    mostrarEstatisticas();
 
+    mostrarGrafico();
 }
 
 
-// ==========================================
-// ENTER PARA ADICIONAR
-// ==========================================
+// Mostrar ranking
 
-nomeInput.addEventListener(
-    "keydown",
-    function (evento) {
+function mostrarRanking() {
 
-        if (evento.key === "Enter") {
+    ranking.innerHTML = "";
 
-            adicionarParticipante();
+    let textoPesquisa = pesquisa.value.toLowerCase();
+
+    let encontrados = 0;
+
+    for (let i = 0; i < participantes.length; i++) {
+
+        let participante = participantes[i];
+
+        if (participante.nome.toLowerCase().includes(textoPesquisa)) {
+
+            encontrados++;
+
+            let div = document.createElement("div");
+
+            div.className = "participante";
+
+            // Destaca os três primeiros
+            if (i == 0) {
+                div.classList.add("primeiro");
+            }
+
+            if (i == 1) {
+                div.classList.add("segundo");
+            }
+
+            if (i == 2) {
+                div.classList.add("terceiro");
+            }
+
+            let medalha = "";
+
+            if (i == 0) {
+                medalha = "🥇";
+            }
+
+            if (i == 1) {
+                medalha = "🥈";
+            }
+
+            if (i == 2) {
+                medalha = "🥉";
+            }
+
+            div.innerHTML = `
+                <span class="posicao">${medalha} ${i + 1}º</span>
+
+                <span class="nome-participante">
+                    ${participante.nome}
+                </span>
+
+                <span class="pontos">
+                    ${participante.pontos} pts
+                </span>
+
+                <div class="acoes">
+
+                    <button class="editar" onclick="editar(${i})">
+                        ✏️
+                    </button>
+
+                    <button class="excluir" onclick="excluir(${i})">
+                        🗑️
+                    </button>
+
+                </div>
+            `;
+
+            ranking.appendChild(div);
+        }
+    }
+
+    if (encontrados == 0) {
+
+        ranking.innerHTML = `
+            <p class="vazio">
+                Nenhum participante encontrado.
+            </p>
+        `;
+    }
+}
+
+
+// Mostrar pódio
+
+function mostrarPodio() {
+
+    podio.innerHTML = "";
+
+    if (participantes.length == 0) {
+
+        podio.innerHTML = `
+            <p class="vazio">
+                Adicione participantes para formar o pódio.
+            </p>
+        `;
+
+        return;
+    }
+
+    let ordem = [];
+
+    // Segundo lugar
+    if (participantes[1]) {
+
+        ordem.push({
+
+            pessoa: participantes[1],
+            medalha: "🥈",
+            classe: "podio-segundo",
+            lugar: "2º lugar"
+
+        });
+    }
+
+    // Primeiro lugar
+    if (participantes[0]) {
+
+        ordem.push({
+
+            pessoa: participantes[0],
+            medalha: "🥇",
+            classe: "podio-primeiro",
+            lugar: "1º lugar"
+
+        });
+    }
+
+    // Terceiro lugar
+    if (participantes[2]) {
+
+        ordem.push({
+
+            pessoa: participantes[2],
+            medalha: "🥉",
+            classe: "podio-terceiro",
+            lugar: "3º lugar"
+
+        });
+    }
+
+    for (let i = 0; i < ordem.length; i++) {
+
+        let item = ordem[i];
+
+        let div = document.createElement("div");
+
+        div.className = "podio-item " + item.classe;
+
+        div.innerHTML = `
+            <span class="medalha">
+                ${item.medalha}
+            </span>
+
+            <span class="nome-podio">
+                ${item.pessoa.nome}
+            </span>
+
+            <span>
+                ${item.lugar}
+            </span>
+
+            <span class="pontos-podio">
+                ${item.pessoa.pontos} pontos
+            </span>
+        `;
+
+        podio.appendChild(div);
+    }
+}
+
+
+// Mostrar estatísticas
+
+function mostrarEstatisticas() {
+
+    quantidade.innerText = participantes.length;
+
+    if (participantes.length == 0) {
+
+        maiorPontuacao.innerText = 0;
+        menorPontuacao.innerText = 0;
+        media.innerText = 0;
+
+        return;
+    }
+
+    let maior = participantes[0].pontos;
+    let menor = participantes[0].pontos;
+    let total = 0;
+
+    for (let i = 0; i < participantes.length; i++) {
+
+        let valor = participantes[i].pontos;
+
+        total = total + valor;
+
+        if (valor > maior) {
+            maior = valor;
+        }
+
+        if (valor < menor) {
+            menor = valor;
+        }
+    }
+
+    let mediaCalculada = total / participantes.length;
+
+    maiorPontuacao.innerText = maior;
+
+    menorPontuacao.innerText = menor;
+
+    media.innerText = mediaCalculada.toFixed(2);
+}
+
+
+// Editar participante
+
+function editar(indice) {
+
+    let novoValor = prompt(
+        "Digite a nova pontuação:",
+        participantes[indice].pontos
+    );
+
+    if (novoValor == null) {
+        return;
+    }
+
+    novoValor = Number(novoValor);
+
+    if (novoValor < 0 || isNaN(novoValor)) {
+
+        mostrarMensagem("Pontuação inválida.");
+
+        return;
+    }
+
+    participantes[indice].pontos = novoValor;
+
+    atualizar();
+
+    mostrarMensagem("Pontuação alterada.");
+}
+
+
+// Excluir participante
+
+function excluir(indice) {
+
+    let resposta = confirm(
+        "Deseja excluir " + participantes[indice].nome + "?"
+    );
+
+    if (resposta == true) {
+
+        participantes.splice(indice, 1);
+
+        atualizar();
+
+        mostrarMensagem("Participante excluído.");
+    }
+}
+
+
+// Pesquisar participante
+
+pesquisa.oninput = function() {
+
+    mostrarRanking();
+};
+
+
+// Mudar a ordem do ranking
+
+ordenacao.onchange = function() {
+
+    organizar();
+
+    atualizar();
+};
+
+
+// Limpar ranking
+
+document.getElementById("limparRanking").onclick = function() {
+
+    if (participantes.length == 0) {
+
+        mostrarMensagem("O ranking já está vazio.");
+
+        return;
+    }
+
+    let resposta = confirm(
+        "Deseja apagar todos os participantes?"
+    );
+
+    if (resposta == true) {
+
+        participantes = [];
+
+        atualizar();
+
+        mostrarMensagem("Ranking apagado.");
+    }
+};
+
+
+// Modo escuro
+
+document.getElementById("modoEscuro").onclick = function() {
+
+    document.body.classList.toggle("escuro");
+
+    if (document.body.classList.contains("escuro")) {
+
+        document.getElementById("modoEscuro").innerText = "☀️";
+
+    } else {
+
+        document.getElementById("modoEscuro").innerText = "🌙";
+    }
+};
+
+
+// Mostrar mensagem
+
+function mostrarMensagem(texto) {
+
+    mensagem.innerText = texto;
+
+    mensagem.classList.add("mostrar");
+
+    setTimeout(function() {
+
+        mensagem.classList.remove("mostrar");
+
+    }, 2000);
+}
+
+
+// Mostrar gráfico
+
+function mostrarGrafico() {
+
+    grafico.innerHTML = "";
+
+    if (participantes.length == 0) {
+
+        grafico.innerHTML = `
+            <p class="vazio">
+                O gráfico aparecerá quando houver participantes.
+            </p>
+        `;
+
+        return;
+    }
+
+    let maior = participantes[0].pontos;
+
+    // Descobre a maior pontuação
+    for (let i = 0; i < participantes.length; i++) {
+
+        if (participantes[i].pontos > maior) {
+
+            maior = participantes[i].pontos;
+
+        }
+    }
+
+    let limite = participantes.length;
+
+    // Mostra no máximo 10 participantes
+    if (limite > 10) {
+
+        limite = 10;
+
+    }
+
+    for (let i = 0; i < limite; i++) {
+
+        let pessoa = participantes[i];
+
+        let porcentagem = 0;
+
+        if (maior > 0) {
+
+            porcentagem = (pessoa.pontos / maior) * 100;
 
         }
 
+        let div = document.createElement("div");
+
+        div.className = "barra-container";
+
+        div.innerHTML = `
+            <span class="barra-nome">
+                ${pessoa.nome}
+            </span>
+
+            <div class="barra-fundo">
+
+                <div
+                    class="barra"
+                    style="width: ${porcentagem}%">
+                </div>
+
+            </div>
+
+            <span class="barra-pontos">
+                ${pessoa.pontos}
+            </span>
+        `;
+
+        grafico.appendChild(div);
     }
-);
+}
 
 
-pontosInput.addEventListener(
-    "keydown",
-    function (evento) {
+// Começa o sistema
 
-        if (evento.key === "Enter") {
-
-            adicionarParticipante();
-
-        }
-
-    }
-);
-
-
-// ==========================================
-// INICIAR
-// ==========================================
-
-ordemAtual =
-    ordenacao.value;
-
-
-organizarRanking();
-
-atualizarTudo();
+atualizar();
